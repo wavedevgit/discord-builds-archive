@@ -3,6 +3,7 @@ name: Archive builds
 on:
   schedule:
     - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 jobs:
   run-node-tasks:
