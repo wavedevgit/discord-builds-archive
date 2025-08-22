@@ -1,0 +1,38 @@
+name: Archive builds
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  run-node-tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run commits.js
+        run: node commits.js
+
+      - name: Run info.js
+        run: node info.js
+
+      - name: Run clean1.js
+        run: node clean1.js
+
+      - name: Run html_and_globalenv.js
+        run: node html_and_globalenv.js
+
+      - name: Run clean.js
+        run: node clean.js
+
+      - name: Run removeNonces.js
+        run: node removeNonces.js
