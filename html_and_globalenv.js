@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 let c = 0;
 let a = 0;
-async function getHtml(builds, versionHash, i, total) {
+async function getHtml(versionHash, i, total) {
   // use cache or use my api
   let html;
   try {
@@ -33,14 +33,13 @@ const getGlobalEnv = (html) => {
 };
 async function main() {
   const files = await fs.readdir("./builds");
-  const builds = JSON.parse(await fs.readFile("./builds.json", "utf-8"));
   for (let file of files) {
     if (file.endsWith(".html")) continue;
     const [i, total] = [files.findIndex((f) => f === file) + 1, files.length];
     const data = await fs.readFile("./builds/" + file, "utf-8");
     try {
       const manifest = JSON.parse(data);
-      const html = await getHtml(builds, manifest.versionHash, i, total);
+      const html = await getHtml(manifest.versionHash, i, total);
       await fs.writeFile(
         "./builds/" + file,
         JSON.stringify({
