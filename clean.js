@@ -4,6 +4,7 @@ async function main() {
   const files = await fs.readdir("./builds");
   for (let file of files) {
     const data = await fs.readFile("./builds/" + file, "utf-8");
+    if (file.endsWith(".html")) continue;
     try {
       const manifest = JSON.parse(data);
       await fs.writeFile(
